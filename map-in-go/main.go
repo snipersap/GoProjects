@@ -33,8 +33,19 @@ func main() {
 	printS(trainRoutes)
 
 	// Print color codes with loop
+	fmt.Println("Print color codes (old)")
 	printColors(colorCodes)
 
+	//Update maps without pointers (maps are reference types)
+	fmt.Println("Print color codes (new)")
+	updateColors(colorCodes)
+	printColors(colorCodes)
+
+}
+
+// Update color codes without using pointer
+func updateColors(c map[string]string) {
+	c["turquiose"] = "#00ffef"
 }
 
 // Print the colors and its hex code
