@@ -32,12 +32,24 @@ func main() {
 	delete(trainRoutes, "ICE5685") //Delete a key
 	printS(trainRoutes)
 
+	// Print color codes with loop
+	printColors(colorCodes)
+
 }
 
+// Print the colors and its hex code
+func printColors(c map[string]string) {
+	for color, hex := range c {
+		fmt.Println("The hex code for the color", color, "is", hex)
+	}
+}
+
+// Print a map of type [int]string
 func printI(ism map[int]string) {
 	fmt.Println(ism)
 }
 
+// Print a map of type [string]string
 func printS(ssm map[string]string) {
 	fmt.Println(ssm)
 }
