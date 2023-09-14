@@ -43,8 +43,5 @@ func (s square) name() string {
 
 // Print the area of an object
 func print(sh shape) {
-	a := sh.area()
-	n := sh.name()
-	fmt.Println("Area of", n, "is", a)
-
+	fmt.Println("Area of", sh.name(), "is", sh.area())
 }
