@@ -33,9 +33,9 @@ func callGoogle() *http.Response {
 }
 
 // Print the body using println statements
-func printBodyLn(resp *http.Response) {
+func printBodyLn(r *http.Response) {
 	document := make([]byte, 32*1024)
-	readCount, err := resp.Body.Read(document)
+	readCount, err := r.Body.Read(document)
 	if readCount == 0 && err != nil {
 		fmt.Println("Bytes read:", readCount, "Body.Read Error:", err)
 	}
@@ -43,9 +43,9 @@ func printBodyLn(resp *http.Response) {
 }
 
 // Print response body using standard go functions
-func printBodyStd(resp *http.Response) {
+func printBodyStd(r *http.Response) {
 	fmt.Println("\nPrint Body using io.Copy() >>")
-	written, copyErr := io.Copy(os.Stdout, resp.Body)
+	written, copyErr := io.Copy(os.Stdout, r.Body)
 	if written == 0 || copyErr != nil {
 		fmt.Println("\nCopy error: ", copyErr)
 	} else {
@@ -54,10 +54,10 @@ func printBodyStd(resp *http.Response) {
 }
 
 // Print response body using custom Log writer
-func printLog(resp *http.Response) {
+func printLog(r *http.Response) {
 	fmt.Println("\nPrint Body using log writer() >>")
 	lw := logWriter{}
-	written, copyErr := io.Copy(lw, resp.Body)
+	written, copyErr := io.Copy(lw, r.Body)
 	if written == 0 || copyErr != nil {
 		fmt.Println("\nCustom Write error: ", copyErr)
 	} else {
