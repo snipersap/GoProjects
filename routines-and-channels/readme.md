@@ -36,6 +36,17 @@ vvv DOWN vvv
 Yay!! http://google.com is up.   
 ^^^ UP ^^^   
 
+### After implementing wait for only 5 channels, although you have 4 links to check
+>Yay!! http://google.com is up.   
+^^^ UP ^^^   
+Maybe http://arunisgood.com is down!   
+vvv DOWN vvv   
+Yay!! http://amazon.com is up.  
+^^^ UP ^^^  
+Yay!! http://honeywell.com is up.  
+^^^ UP ^^^  
+*Here the program waits indefinitely!*
+
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
 
