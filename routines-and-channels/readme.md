@@ -27,7 +27,14 @@ Maybe http://arunisgood.com is down!
 > No output.
 
 ### After implementing wait for only 1 channel
->
+> Maybe http://arunisgood.com is down!   
+vvv DOWN vvv   
+
+### After implementing wait for only 2 channels
+>Maybe http://arunisgood.com is down!   
+vvv DOWN vvv   
+Yay!! http://google.com is up.   
+^^^ UP ^^^   
 
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
