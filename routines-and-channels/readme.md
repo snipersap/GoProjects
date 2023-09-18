@@ -47,6 +47,16 @@ Yay!! http://honeywell.com is up.
 ^^^ UP ^^^  
 *Here the program waits indefinitely!*
 
+### After implementing wait for as many links we are checking
+>Maybe http://arunisgood.com is down!  
+vvv DOWN vvv  
+Yay!! http://google.com is up.  
+^^^ UP ^^^  
+Yay!! http://amazon.com is up.  
+^^^ UP ^^^  
+Yay!! http://honeywell.com is up.  
+^^^ UP ^^^  
+
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
 

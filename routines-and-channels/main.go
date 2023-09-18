@@ -12,15 +12,24 @@ func main() {
 		"http://honeywell.com",
 		"http://arunisgood.com",
 	}
+	// Create channel
 	c := make(chan string)
 
+	// Call routine and pass each link to it
 	for _, link := range links {
 		go checkLink(link, c)
 	}
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
+
+	// Wait for the completion of the routines of each of the links
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
+	}
+
+	// Wait using separate Println statements
+	// fmt.Println(<-c)
+	// fmt.Println(<-c)
+	// fmt.Println(<-c)
+	// fmt.Println(<-c)
 	// fmt.Println(<-c)
 }
 
