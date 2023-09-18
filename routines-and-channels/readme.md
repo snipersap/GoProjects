@@ -1,7 +1,7 @@
 # ReadMe
 This repo is the project *routines-and-channels* as described in the course  [Go: The Complete Developer's Guide (Golang)](https://udemy.com/course/go-the-complete-developers-guide/). 
 
-
+The programs implements variations of the go routines, uses endless loops and function literal and sleep, and thus implements an endless web link status checker.
 
 ## How to test the repo?
 Run the files `main.go` using the command 
@@ -82,8 +82,24 @@ Maybe http://arunisgood.com is down!
 Maybe http://arunisgood.com is down!  
 Maybe http://arunisgood.com is down!  
 
+## USe function literal and remove sharing of variables between main and child routines
+>Maybe http://arunisgood.com is down!  
+Yay!! http://google.com is up.  
+Yay!! http://amazon.com is up.  
+Yay!! http://honeywell.com is up.  
+Maybe http://arunisgood.com is down!  
+Yay!! http://google.com is up.  
+Yay!! http://amazon.com is up.  
+Maybe http://arunisgood.com is down!  
+Yay!! http://honeywell.com is up.  
+Yay!! http://google.com is up.  
+Maybe http://arunisgood.com is down!  
+Yay!! http://amazon.com is up.  
+Yay!! http://honeywell.com is up.  
+Yay!! http://google.com is up.  
+Maybe http://arunisgood.com is down!  
 
-
+The above lines are printed with around 5 seconds of delay.
 
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -25,8 +26,13 @@ func main() {
 	// }
 
 	//Alternative form of endless loop checking link status endlessly
+	//Include sleep and remove sharing of variables
 	for l := range c { //still and endless loop
-		go checkLink(l, c)
+		// time.Sleep(5 * time.Second)  //Sleeps the main routine
+		go func(link string) { //Function literal with func definition
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(l) //With actual arguments
 	}
 
 	// Wait for the completion of the routines of each of the links
@@ -43,6 +49,7 @@ func main() {
 }
 
 func checkLink(link string, c chan string) {
+	// time.Sleep(5 * time.Second) //sleeps the child routine, but also breaks the single responsiblity principle
 	_, err := http.Get(link)
 	if err != nil {
 		println("Maybe", link, "is down!")
