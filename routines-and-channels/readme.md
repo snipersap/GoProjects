@@ -69,6 +69,21 @@ Maybe http://arunisgood.com is down!
 Maybe http://arunisgood.com is down!  
 Maybe http://arunisgood.com is down!  
 
+The above outcome is because the memory of the channel is being referenced by both main and child routines, where the child routine changes the value of the channel c, and the same link gets passed again to the checklink function within the endless loop. In rare cases, the checklink function receives other links to process too. 
+
+## Alternative form of endless loop
+>Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Yay!! http://google.com is up.  
+Yay!! http://amazon.com is up.  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+
+
+
 
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 

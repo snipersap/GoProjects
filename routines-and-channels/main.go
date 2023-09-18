@@ -20,8 +20,13 @@ func main() {
 	}
 
 	//Keep checking the status of the links endlessly
-	for { //endless loop
-		go checkLink(<-c, c) //use the value of channel c to check the link again
+	// for { //endless loop
+	// 	go checkLink(<-c, c) //use the value of channel c to check the link again
+	// }
+
+	//Alternative form of endless loop checking link status endlessly
+	for l := range c { //still and endless loop
+		go checkLink(l, c)
 	}
 
 	// Wait for the completion of the routines of each of the links
