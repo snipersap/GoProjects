@@ -57,6 +57,19 @@ Yay!! http://amazon.com is up.
 Yay!! http://honeywell.com is up.  
 ^^^ UP ^^^  
 
+## Implement link check endlessly
+>Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Yay!! http://google.com is up.  
+Maybe http://arunisgood.com is down!  
+Yay!! http://amazon.com is up.  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+Maybe http://arunisgood.com is down!  
+
+
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
 
