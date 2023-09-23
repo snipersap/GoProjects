@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 // Builder pattern: Provide the user a simple step by step procedure to build something complex.
 // To send an email, the user needs to provide the sender address, receiver address, body of the email,
@@ -51,6 +54,8 @@ func (e *emailBuilder) signature(sign string) *emailBuilder {
 }
 
 func (e *emailBuilder) send() {
-	fmt.Printf("From:%s\nTo:%s\nSubject:%s\n\n%s\n%s",
+	fmt.Printf("From:%s\nTo:%s\nSubject:%s\n\n%s\n%s\n",
 		e.email.from, e.email.to, e.email.subject, e.email.body, e.email.signature)
+
+	log.Println("Email sent to", e.email.to)
 }

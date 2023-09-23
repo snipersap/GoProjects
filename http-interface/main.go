@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 )
@@ -25,9 +26,11 @@ func main() {
 // Call google.com and return response
 func callGoogle() *http.Response {
 	resp, err := http.Get("https://google.com")
+	// resp, err := http.Get("ftp://google.com")
 	if err != nil {
-		fmt.Println("http.Get Error:", err)
-		os.Exit(1)
+		// fmt.Println("http.Get Error:", err)
+		// os.Exit(1)
+		log.Fatal("http.Get Error:", err) //logs and exits with code 1
 	}
 	return resp
 }

@@ -31,6 +31,11 @@ From custom Write implementation with 18379 bytes >>
 *prints body of google.com*  
 , Wrote: 18379 bytes  
 
+
+In case we use ftp instead of http in get: 
+>2023/09/23 10:22:48 http.Get Error:Get "ftp://google.com": unsupported protocol scheme "ftp"
+>exit status 1
+
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
 
