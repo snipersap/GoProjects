@@ -17,12 +17,24 @@ In case of confusion, check the commits.
 
 ## Expected output
 ### Web browser
+#### Home page
+About >> is a link to the about page.
 ```
-Hello World!
+Hello World!, You are looking at the home page. About >>
 ```
-### Console
+#### About page
+Home >> is a link to the Home page
+```
+Now we are in the About page.Home >> Result of addition of 2 numbers is:6
 ```
 
+### Console
+Two responses for / and one for the About page.
+```
+2023/09/25 18:05:17 Starting web server on port: :8080
+2023/09/25 18:05:33 Bytes written to response: 90
+2023/09/25 18:05:34 Bytes written to response: 90
+2023/09/25 18:05:34 Bytes written to response: 90
 ```
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
