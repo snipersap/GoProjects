@@ -1,61 +1,45 @@
 package main
 
-import (
-	"fmt"
-	"log"
-)
+import "fmt"
 
 // Builder pattern: Provide the user a simple step by step procedure to build something complex.
 // To send an email, the user needs to provide the sender address, receiver address, body of the email,
 // subject and maybe signature.
 // This complex task, can be split into steps to make the sending of an email easier.
-type email struct {
-	from, to, subject, body, signature string
-}
-
-type emailBuilder struct {
-	email *email
-}
 
 func main() {
 
-	e := emailBuilder{&email{}}
-	e.from("arun@shimla.com").
-		to("sharmaji@mithila.com").
-		subject("Hi from afar").
-		body("Hi Sharma,\nLong time no see. Miss me?\n").
-		signature("--\nYour retired friend,\nArun").
+	//Builder with facets
+	fmt.Println("Builder Facets Pattern >>")
+	e := EmailBuilder{&email{}}
+	e.From("arun@shimla.com").
+		To("sharmaji@mithila.com").
+		Subject("Hi from afar").
+		Body("Hi Sharma,\nLong time no see. Miss me?\n").
+		Signature("--\nYour retired friend,\nArun").
 		send()
-}
 
-func (e *emailBuilder) from(address string) *emailBuilder {
-	e.email.from = address
-	return e
-}
+	// Builder as Parameter, i.e. pass builder struct as param to function
+	// Use case: Take the builder pattern as a function to a facade and call the actual implementating
+	// function inside it that does the action of sending email
+	// This hides the internal struct and actual send email functionality from the user.
+	fmt.Println("\n\nBuilder as Parameter Pattern >>")
+	SendEmail(func(b *EmailBuilder) {
+		b.From("kap@masala.com").
+			To("hello@herethere.com").
+			Subject("Halli Hallo!").
+			Body("Hi Hello tourism,\nWhat are the plans?\n").
+			Signature("--\nYours truly,\nKap")
 
-func (e *emailBuilder) to(address string) *emailBuilder {
-	e.email.to = address
-	return e
-}
+	})
 
-func (e *emailBuilder) subject(sub string) *emailBuilder {
-	e.email.subject = sub
-	return e
-}
-
-func (e *emailBuilder) body(body string) *emailBuilder {
-	e.email.body = body
-	return e
-}
-
-func (e *emailBuilder) signature(sign string) *emailBuilder {
-	e.email.signature = sign
-	return e
-}
-
-func (e *emailBuilder) send() {
-	fmt.Printf("From:%s\nTo:%s\nSubject:%s\n\n%s\n%s\n",
-		e.email.from, e.email.to, e.email.subject, e.email.body, e.email.signature)
-
-	log.Println("Email sent to", e.email.to)
+	//Functional Builder: Take all actions as params and
+	// execute those actions with a delay (in a single shot)
+	efb := EmailFunctionalBuilder{}
+	efb.EmailFrom("arun@shimla.com").
+		EmailTo("sharmaji@mithila.com").
+		EmailSubject("Hi from afar").
+		EmailBody("Hi Sharma,\nLong time no see. Miss me?\n").
+		EmailSignature("--\nYour retired friend,\nArun").
+		BuildAndSendEmail()
 }
