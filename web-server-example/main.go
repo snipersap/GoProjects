@@ -26,6 +26,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	nBytes, err := w.Write([]byte("<html>Hello World!, You are looking at the home page. <a href='/about'>About >></a></html>"))
 	if err != nil {
 		log.Println("response writer error:", err.Error())
+		return
 	} else {
 		log.Println("Bytes written to response:", nBytes)
 	}
@@ -38,6 +39,7 @@ func About(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "\nResult of addition of 2 numbers is:%d</html>", res)
 }
 
+// sum adds two integers and returns the results
 func sum(x, y int) int {
 	return x + y
 }
