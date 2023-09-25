@@ -1,7 +1,7 @@
 # ReadMe
-This repo is the project *web-server-with-html-templates* as described in the course  [Design Patterns in Go](https://udemy.com/course/design-patterns-go/). 
+This repo is the project *web-server-with-html-templates* as described in the course  [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/). 
 
-This repo demonstrates the builder pattern in go, with its various types. 
+This repo demostrates a web server that generates 2 html web pages with templates.
 
 ## How to test the repo?
 1. Run the files `main.go` and all others using the command `go run .`.

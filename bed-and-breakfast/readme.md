@@ -1,7 +1,7 @@
 # ReadMe
-This repo is the project *bed-and-breakfast* as described in the course  [Design Patterns in Go](https://udemy.com/course/design-patterns-go/). 
+This repo is the project *bed-and-breakfast* as described in the course  [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/). 
 
-This repo demonstrates the builder pattern in go, with its various types. 
+This is the `bed and breakfast` project built with go as backend. 
 
 ## How to test the repo?
 1. Run the files in `cmd\web` such as `main.go` and any other file using the command `go run .`.

@@ -1,7 +1,7 @@
 # ReadMe
-This repo is the project *web-server-example* as described in the course  [Design Patterns in Go](https://udemy.com/course/design-patterns-go/). 
+This repo is the project *web-server-example* as described in the course   [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/). 
 
-This repo demonstrates the builder pattern in go, with its various types. 
+This repo demonstrates a web server that handles 2 incoming URLs, `/` and `/about`
 
 ## How to test the repo?
 1. Run the files `main.go` using the command `go run main.go`.
