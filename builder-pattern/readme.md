@@ -4,7 +4,7 @@ This repo is the project *builder-pattern* as described in the course  [Design P
 This repo demonstrates the builder pattern in go, with its various types. 
 
 ## How to test the repo?
-Run the files `main.go` and ``builder.facets.go` using the command 
+Run the files `main.go` and `builder.facets.go` using the command 
 `go run main.go builder.facets.go`.   
 
 Run the tests with 
