@@ -18,8 +18,12 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	render.RenderTemplate(w, homeTpl) //Using .html notation to use Emmet abbreviations in VS Code
-	log.Println("Rendered Home")
+	err := render.RenderTemplate(w, homeTpl) //Using .html notation to use Emmet abbreviations in VS Code
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Home")
+	}
 }
 
 // isURLPathHome checks for the path '/' in the URL and returns true if path is '/'
@@ -30,6 +34,10 @@ func isURLPathHome(r *http.Request) bool {
 
 // About handles the about page with URL /about
 func About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, aboutTpl) //Using .html notation to use Emmet abbreviations in VS Code
-	log.Println("Rendered About")
+	err := render.RenderTemplate(w, aboutTpl) //Using .html notation to use Emmet abbreviations in VS Code
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered About")
+	}
 }
