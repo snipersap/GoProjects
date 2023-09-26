@@ -33,15 +33,13 @@ You can go to the Home page.
 ### Console
 
 ```
-2023/09/25 22:24:45 Starting web server on port: :8080
-2023/09/25 22:24:54 Rendered template: about.page.tmpl
-2023/09/25 22:24:54 Rendered About
-2023/09/25 22:24:54 Rendered template: home.page.tmpl
-2023/09/25 22:24:54 Rendered Home
-2023/09/25 22:25:22 Rendered template: home.page.tmpl
-2023/09/25 22:25:22 Rendered Home
-2023/09/25 22:25:22 Rendered template: home.page.tmpl
-2023/09/25 22:25:22 Rendered Home
+2023/09/26 16:22:20 Starting web server on port: :8080
+2023/09/26 16:22:33 Rendered template: home.page.tmpl
+2023/09/26 16:22:33 Rendered Home
+2023/09/26 16:22:40 Rendered template: about.page.tmpl
+2023/09/26 16:22:40 Rendered About
+2023/09/26 16:22:46 Rendered template: home.page.tmpl
+2023/09/26 16:22:46 Rendered Home
 ```
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
