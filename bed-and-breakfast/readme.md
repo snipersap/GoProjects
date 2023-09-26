@@ -41,6 +41,24 @@ You can go to the Home page.
 2023/09/26 16:22:46 Rendered template: home.page.tmpl
 2023/09/26 16:22:46 Rendered Home
 ```
+
+#### Simulating error in reading layout files
+```
+2023/09/26 21:53:30 Starting web server on port: :8080
+2023/09/26 21:53:34 [templates\about.page.tmpl templates\home.page.tmpl]
+2023/09/26 21:53:34 ERROR could not read layouts from disk "search query"=./templates/*.lyout.tmpl
+2023/09/26 21:53:34 ERROR could not read layouts from disk
+2023/09/26 21:53:34 ERROR could not load cache from disk!
+```
+
+#### Simulating error in reading layout files
+```
+2023/09/26 21:49:48 Starting web server on port: :8080
+2023/09/26 21:49:53 ERROR could not load templates from disk "search query"=./templates/*.pge.tmpl
+2023/09/26 21:49:53 ERROR could not load templates from disk
+2023/09/26 21:49:53 ERROR could not load cache from disk!
+```
+
 ## Report bugs or suggestions
 Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
 
