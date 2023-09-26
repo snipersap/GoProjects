@@ -1,5 +1,6 @@
 package render
 
+// Create a template cache w/o manual input
 import (
 	"bytes"
 	"errors"
@@ -8,31 +9,33 @@ import (
 	"log/slog"
 	"net/http"
 	"path/filepath"
-)
 
-// Create a template cache w/o manual input
+	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/config"
+)
 
 // RenderTemplate takes the name of the template as input and writes the parsed
 // output from templates and layouts to the response writer
 func RenderTemplate(w http.ResponseWriter, tName string) error {
 
-	//create the Template Cache
-	tc, err := createTemplateCache()
-	if err != nil {
-		slog.Error("could not load cache from disk!")
+	// load template cache from app config
+	tc := appConfigInRender().TemplateCache
+	if tc == nil {
+		err := errors.New("could not load cache from app config")
+		slog.Error(err.Error())
 		return err
 	}
 
 	// get requested template from cache
 	t, ok := tc[tName]
 	if !ok {
-		slog.Error("could not load template from cache")
+		err := errors.New("could not load template from cache")
+		slog.Error(err.Error())
 		return err
 	}
 
 	//Using the buffer to write to response instead of directly writing it
 	buf := new(bytes.Buffer)
-	err = t.Execute(buf, nil)
+	err := t.Execute(buf, nil)
 	if err != nil {
 		slog.Error("could not write parsed templates to buffer", "error", err.Error())
 		return err
@@ -45,9 +48,9 @@ func RenderTemplate(w http.ResponseWriter, tName string) error {
 	return nil
 }
 
-// createTemplateCache reads the templates and layouts from the templates directory
+// CreateTemplateCache reads the templates and layouts from the templates directory
 // and returns the template cache after parsing
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 
 	// init the cache
 	tmplCache := map[string]*template.Template{}
@@ -120,4 +123,20 @@ func pageTemplates() ([]string, error) {
 		log.Println(pages)
 		return pages, nil
 	}
+}
+
+// Populate the app config
+
+// app is local to package render and stores the app config
+var app *config.AppConfig
+
+// SetAppConfig sets the reference of the application config
+// locally in the render package
+func SetAppConfig(a *config.AppConfig) {
+	app = a
+}
+
+// appConfigInRender returns the reference of the local app config in render package
+func appConfigInRender() *config.AppConfig {
+	return app
 }
