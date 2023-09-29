@@ -39,7 +39,7 @@ func main() {
 	// Setup server and run with pat
 	srv := http.Server{
 		Addr:    portNumber,
-		Handler: chiRoutes(&app),
+		Handler: routes(&app),
 	}
 	log.Println("Starting web server on port:", portNumber)
 	err = srv.ListenAndServe()
@@ -61,6 +61,7 @@ func main() {
 
 }
 
+// CreateSession creates a new session with default values and returns it
 func CreateSession() *scs.SessionManager {
 	s := scs.New()
 	s.Lifetime = 24 * time.Hour
@@ -70,14 +71,17 @@ func CreateSession() *scs.SessionManager {
 	return s
 }
 
+// SetSession sets the provided session to the app config
 func SetSession(app *config.AppConfig, s *scs.SessionManager) {
 	app.Session = s
 }
 
+// SetUseCache sets the provided value for UseCache to app config
 func SetUseCache(app *config.AppConfig, uc bool) {
 	app.UseCache = uc
 }
 
+// SetTmplCache sets the template cache provided to app config
 func SetTmplCache(app *config.AppConfig, t map[string]*template.Template) {
 	app.TemplateCache = t
 }

@@ -10,6 +10,7 @@ import (
 	handler "github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/handlers"
 )
 
+// routes creates a new router, registers the middlewares and loads the session
 func routes(a *config.AppConfig) http.Handler {
 	mux := chi.NewRouter()
 
@@ -18,6 +19,7 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
+	mux = endPoints(mux)
 	return mux
 }
 
@@ -54,7 +56,7 @@ func chiRoutesWithNoSurf(a *config.AppConfig) http.Handler {
 
 }
 
-// registeredRoutes returns routes of the app
+// endPoints returns routes of the app
 func endPoints(mux *chi.Mux) *chi.Mux {
 	mux.Get("/", handler.Repo.Home)
 	mux.Get("/about", handler.Repo.About)
