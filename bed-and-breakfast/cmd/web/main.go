@@ -4,7 +4,9 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/config"
 	handler "github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/handlers"
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/render"
@@ -12,10 +14,13 @@ import (
 
 const portNumber string = ":8080"
 
+// declare app config
+var app config.AppConfig
+
 func main() {
 
-	// declare app config
-	var app config.AppConfig
+	s := CreateSession()
+	SetSession(&app, s)
 
 	//create the Template Cache
 	tc, err := render.GetTemplateCache()
@@ -24,8 +29,8 @@ func main() {
 	}
 
 	// Set the template cache to app config and render package
-	InitTmplCacheInAppConfig(&app, tc)
-	InitUseCacheInAppConfig(&app, false)
+	SetTmplCache(&app, tc)
+	SetUseCache(&app, false)
 	render.SetAppConfig(&app)
 	// Init a handler repository with app config
 	repo := handler.NewRepo(&app)
@@ -34,7 +39,7 @@ func main() {
 	// Setup server and run with pat
 	srv := http.Server{
 		Addr:    portNumber,
-		Handler: chiRoutesWithNoSurf(&app),
+		Handler: chiRoutes(&app),
 	}
 	log.Println("Starting web server on port:", portNumber)
 	err = srv.ListenAndServe()
@@ -56,10 +61,23 @@ func main() {
 
 }
 
-func InitUseCacheInAppConfig(app *config.AppConfig, uc bool) {
+func CreateSession() *scs.SessionManager {
+	s := scs.New()
+	s.Lifetime = 24 * time.Hour
+	s.Cookie.Persist = true
+	s.Cookie.SameSite = http.SameSiteLaxMode
+	s.Cookie.Secure = app.InProduction
+	return s
+}
+
+func SetSession(app *config.AppConfig, s *scs.SessionManager) {
+	app.Session = s
+}
+
+func SetUseCache(app *config.AppConfig, uc bool) {
 	app.UseCache = uc
 }
 
-func InitTmplCacheInAppConfig(app *config.AppConfig, t map[string]*template.Template) {
+func SetTmplCache(app *config.AppConfig, t map[string]*template.Template) {
 	app.TemplateCache = t
 }

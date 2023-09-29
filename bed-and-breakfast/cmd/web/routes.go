@@ -10,6 +10,17 @@ import (
 	handler "github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/handlers"
 )
 
+func routes(a *config.AppConfig) http.Handler {
+	mux := chi.NewRouter()
+
+	mux.Use(middleware.Recoverer)
+	mux.Use(LogEachApiHit)
+	mux.Use(NoSurf)
+	mux.Use(SessionLoad)
+
+	return mux
+}
+
 // patRoutes registers the route handlers
 func patRoutes(a *config.AppConfig) http.Handler {
 	mux := pat.New()
@@ -26,7 +37,7 @@ func chiRoutes(a *config.AppConfig) http.Handler {
 	mux.Use(middleware.Recoverer) //Use chi middleware
 	mux.Use(LogEachApiHit)        // Use custom middle ware
 
-	mux = routes(mux)
+	mux = endPoints(mux)
 	return mux
 }
 
@@ -38,13 +49,13 @@ func chiRoutesWithNoSurf(a *config.AppConfig) http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(NoSurf)
 
-	mux = routes(mux)
+	mux = endPoints(mux)
 	return mux
 
 }
 
 // registeredRoutes returns routes of the app
-func routes(mux *chi.Mux) *chi.Mux {
+func endPoints(mux *chi.Mux) *chi.Mux {
 	mux.Get("/", handler.Repo.Home)
 	mux.Get("/about", handler.Repo.About)
 	return mux
