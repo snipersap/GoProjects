@@ -117,7 +117,7 @@ func GetTemplateCache() (map[string]*template.Template, error) {
 		tmplCache[tName] = tSet
 	}
 
-	log.Println(tmplCache)
+	// log.Println(tmplCache)
 	return tmplCache, nil
 }
 
@@ -155,7 +155,7 @@ func pageTemplates() ([]string, error) {
 		slog.Error(err.Error(), "search query", pattern)
 		return nil, err
 	} else {
-		log.Println(pages)
+		// log.Println(pages)
 		return pages, nil
 	}
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/render"
 )
 
-const portNumber = ":8080"
+const portNumber string = ":8080"
 
 func main() {
 
@@ -34,8 +34,9 @@ func main() {
 	// Setup server and run with pat
 	srv := http.Server{
 		Addr:    portNumber,
-		Handler: routes(&app),
+		Handler: chiRoutesWithNoSurf(&app),
 	}
+	log.Println("Starting web server on port:", portNumber)
 	err = srv.ListenAndServe()
 	if err != nil {
 		log.Fatalln("couldn't start the web server on port "+portNumber+
