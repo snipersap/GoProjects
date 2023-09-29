@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 
@@ -17,20 +18,37 @@ func main() {
 	var app config.AppConfig
 
 	//create the Template Cache
-	tc, err := render.CreateTemplateCache()
+	tc, err := render.GetTemplateCache()
 	if err != nil {
 		log.Fatalln("cannot load template cache. Exiting app:", err.Error())
 	}
-	app.TemplateCache = tc
+
+	// Set the template cache to app config and render package
+	InitTmplCacheInAppConfig(&app, tc)
+	InitUseCacheInAppConfig(&app, false)
 	render.SetAppConfig(&app)
 
-	http.HandleFunc("/", handler.Home)
-	http.HandleFunc("/about", handler.About)
+	// Init a handler repository with app config
+	repo := handler.NewRepo(&app)
+	handler.SetRepo(repo)
 
+	//Set handlers for the apis
+	http.HandleFunc("/", handler.Repo.Home)
+	http.HandleFunc("/about", handler.Repo.About)
+
+	//Start the web server
 	log.Println("Starting web server on port:", portNumber)
 	wErr := http.ListenAndServe(":8080", nil)
 	if wErr != nil {
 		log.Fatalln("couldn't start the web server on port 8080. Error was:", wErr.Error())
 	}
 
+}
+
+func InitUseCacheInAppConfig(app *config.AppConfig, uc bool) {
+	app.UseCache = uc
+}
+
+func InitTmplCacheInAppConfig(app *config.AppConfig, t map[string]*template.Template) {
+	app.TemplateCache = t
 }

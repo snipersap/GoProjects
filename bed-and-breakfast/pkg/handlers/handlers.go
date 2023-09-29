@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/config"
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/render"
 )
 
@@ -12,8 +13,26 @@ const (
 	aboutTpl = "about.page.tmpl"
 )
 
+// Repo stores the pointer to a Repository
+var Repo *Repository
+
+// Repository defines the structure to store the app config
+type Repository struct {
+	App *config.AppConfig
+}
+
+// NewRepo creates a new Repository with the app config and returns a pointer to the new repository
+func NewRepo(a *config.AppConfig) *Repository {
+	return &Repository{a}
+}
+
+// SetRepo initializes the reference to a Repository
+func SetRepo(r *Repository) {
+	Repo = r
+}
+
 // Home handles the home page URL or /
-func Home(w http.ResponseWriter, r *http.Request) {
+func (rp *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	if !isURLPathHome(r) {
 		http.NotFound(w, r)
 		return
@@ -33,7 +52,7 @@ func isURLPathHome(r *http.Request) bool {
 }
 
 // About handles the about page with URL /about
-func About(w http.ResponseWriter, r *http.Request) {
+func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 	err := render.RenderTemplate(w, aboutTpl) //Using .html notation to use Emmet abbreviations in VS Code
 	if err != nil {
 		http.Error(w, err.Error(), 500)

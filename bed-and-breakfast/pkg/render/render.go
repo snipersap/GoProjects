@@ -17,25 +17,15 @@ import (
 // output from templates and layouts to the response writer
 func RenderTemplate(w http.ResponseWriter, tName string) error {
 
-	// load template cache from app config
-	tc := appConfigInRender().TemplateCache
-	if tc == nil {
-		err := errors.New("could not load cache from app config")
-		slog.Error(err.Error())
-		return err
-	}
-
-	// get requested template from cache
-	t, ok := tc[tName]
-	if !ok {
-		err := errors.New("could not load template from cache")
-		slog.Error(err.Error())
+	//get parsed template
+	t, err := getParsedTemplate(tName)
+	if err != nil {
 		return err
 	}
 
 	//Using the buffer to write to response instead of directly writing it
 	buf := new(bytes.Buffer)
-	err := t.Execute(buf, nil)
+	err = t.Execute(buf, nil)
 	if err != nil {
 		slog.Error("could not write parsed templates to buffer", "error", err.Error())
 		return err
@@ -48,9 +38,46 @@ func RenderTemplate(w http.ResponseWriter, tName string) error {
 	return nil
 }
 
-// CreateTemplateCache reads the templates and layouts from the templates directory
+func getParsedTemplate(tName string) (*template.Template, error) {
+	var tc map[string]*template.Template
+	var err error
+
+	//Pull from cache?
+	if isCacheAllowed() {
+		// load template cache from app config
+		tc = appConfigInRender().TemplateCache
+		if tc == nil {
+			err := errors.New("could not load cache from app config")
+			slog.Error(err.Error())
+			return nil, err
+		}
+	} else {
+		//create the Template Cache
+		tc, err = GetTemplateCache()
+		if err != nil {
+			log.Fatalln("cannot load template cache. Exiting app:", err.Error())
+		}
+	}
+
+	// get requested template from cache
+	t, ok := tc[tName]
+	if !ok {
+		err := errors.New("could not load template from cache")
+		slog.Error(err.Error())
+		return nil, err
+	}
+
+	return t, nil
+}
+
+// isCacheAllowed returns UseCache from App config
+func isCacheAllowed() bool {
+	return appConfigInRender().UseCache
+}
+
+// GetTemplateCache reads the templates and layouts from the templates directory
 // and returns the template cache after parsing
-func CreateTemplateCache() (map[string]*template.Template, error) {
+func GetTemplateCache() (map[string]*template.Template, error) {
 
 	// init the cache
 	tmplCache := map[string]*template.Template{}
