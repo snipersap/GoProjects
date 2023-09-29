@@ -27,21 +27,31 @@ func main() {
 	InitTmplCacheInAppConfig(&app, tc)
 	InitUseCacheInAppConfig(&app, false)
 	render.SetAppConfig(&app)
-
 	// Init a handler repository with app config
 	repo := handler.NewRepo(&app)
 	handler.SetRepo(repo)
 
-	//Set handlers for the apis
-	http.HandleFunc("/", handler.Repo.Home)
-	http.HandleFunc("/about", handler.Repo.About)
-
-	//Start the web server
-	log.Println("Starting web server on port:", portNumber)
-	wErr := http.ListenAndServe(":8080", nil)
-	if wErr != nil {
-		log.Fatalln("couldn't start the web server on port 8080. Error was:", wErr.Error())
+	// Setup server and run with pat
+	srv := http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
 	}
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Fatalln("couldn't start the web server on port "+portNumber+
+			" Error was:", err.Error())
+	}
+
+	// //Set handlers for the apis
+	// http.HandleFunc("/", handler.Repo.Home)
+	// http.HandleFunc("/about", handler.Repo.About)
+
+	// //Start the web server
+	// log.Println("Starting web server on port:", portNumber)
+	// wErr := http.ListenAndServe(portNumber, nil)
+	// if wErr != nil {
+	// 	log.Fatalln("couldn't start the web server on port 8080. Error was:", wErr.Error())
+	// }
 
 }
 
