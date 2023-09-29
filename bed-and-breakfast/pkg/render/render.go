@@ -11,11 +11,12 @@ import (
 	"path/filepath"
 
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/config"
+	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/models"
 )
 
 // RenderTemplate takes the name of the template as input and writes the parsed
 // output from templates and layouts to the response writer
-func RenderTemplate(w http.ResponseWriter, tName string) error {
+func RenderTemplate(w http.ResponseWriter, tName string, td *models.TemplateData) error {
 
 	//get parsed template
 	t, err := getParsedTemplate(tName)
@@ -23,9 +24,12 @@ func RenderTemplate(w http.ResponseWriter, tName string) error {
 		return err
 	}
 
+	// Placeholder for adding some default data before writing the response
+	td = addDefaultData(td)
+
 	//Using the buffer to write to response instead of directly writing it
 	buf := new(bytes.Buffer)
-	err = t.Execute(buf, nil)
+	err = t.Execute(buf, td)
 	if err != nil {
 		slog.Error("could not write parsed templates to buffer", "error", err.Error())
 		return err
@@ -36,6 +40,10 @@ func RenderTemplate(w http.ResponseWriter, tName string) error {
 		return err
 	}
 	return nil
+}
+
+func addDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
 }
 
 func getParsedTemplate(tName string) (*template.Template, error) {

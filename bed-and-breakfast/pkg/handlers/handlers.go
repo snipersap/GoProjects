@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/config"
+	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/models"
 	"github.com/snipersap/GoProjects/tree/main/bed-and-breakfast/pkg/render"
 )
 
@@ -37,7 +38,7 @@ func (rp *Repository) Home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	err := render.RenderTemplate(w, homeTpl) //Using .html notation to use Emmet abbreviations in VS Code
+	err := render.RenderTemplate(w, homeTpl, &models.TemplateData{}) //Using .html notation to use Emmet abbreviations in VS Code
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -53,10 +54,19 @@ func isURLPathHome(r *http.Request) bool {
 
 // About handles the about page with URL /about
 func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
-	err := render.RenderTemplate(w, aboutTpl) //Using .html notation to use Emmet abbreviations in VS Code
+
+	td := dynContentAbout()
+	err := render.RenderTemplate(w, aboutTpl, td) //Using .html notation to use Emmet abbreviations in VS Code
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
 		log.Println("Rendered About")
 	}
+}
+
+func dynContentAbout() *models.TemplateData {
+	sMap := make(map[string]string)
+	sMap["About me"] = "Software Engineering Manager from Germany"
+	td := models.TemplateData{StringMap: sMap}
+	return &td
 }
