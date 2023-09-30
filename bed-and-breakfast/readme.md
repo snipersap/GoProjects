@@ -62,13 +62,14 @@ Your remote address is:[::1]:56140
 ### Console
 
 ```bash
-2023/09/26 16:22:20 Starting web server on port: :8080
-2023/09/26 16:22:33 Rendered template: home.page.tmpl
-2023/09/26 16:22:33 Rendered Home
-2023/09/26 16:22:40 Rendered template: about.page.tmpl
-2023/09/26 16:22:40 Rendered About
-2023/09/26 16:22:46 Rendered template: home.page.tmpl
-2023/09/26 16:22:46 Rendered Home
+$ go run cmd/web/*.go
+2023/09/30 12:28:13 Starting web server on port: :8080
+Page was hit!: /about
+2023/09/30 12:31:54 Rendered About
+Page was hit!: /
+2023/09/30 12:32:06 Rendered Home
+Page was hit!: /about
+2023/09/30 12:32:13 Rendered About
 ```
 
 #### Simulating error in reading template files
