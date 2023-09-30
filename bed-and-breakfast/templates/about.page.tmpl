@@ -8,6 +8,12 @@
                 <p>You can go to the <a href="/">Home</a> page. </p>
                 <p>Another paragraph</p>
                 <p>About me: {{index .StringMap "About me"}}</p>
+                {{if ne (index .StringMap "remote_Ip") ""}}
+                    <p>Your remote address is:{{index .StringMap "remote_Ip"}}</p>
+                {{else}}
+                    <p>Your address was not yet registered. Please visit the 
+                    <a href="/">Home</a> page first and then come back to me. </p>
+                {{end}}
             </div>
         </div>
     </div>

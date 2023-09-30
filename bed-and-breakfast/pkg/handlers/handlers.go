@@ -34,16 +34,23 @@ func SetRepo(r *Repository) {
 
 // Home handles the home page URL or /
 func (rp *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	rp.setIPToSession(r)
+
 	if !isURLPathHome(r) {
 		http.NotFound(w, r)
 		return
 	}
-	err := render.RenderTemplate(w, homeTpl, &models.TemplateData{}) //Using .html notation to use Emmet abbreviations in VS Code
+	err := render.RenderTemplate(w, homeTpl, &models.TemplateData{})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
 		log.Println("Rendered Home")
 	}
+}
+
+// setIPToSession add remote IP address into session
+func (rp *Repository) setIPToSession(r *http.Request) {
+	rp.App.Session.Put(r.Context(), "remote_Ip", r.RemoteAddr)
 }
 
 // isURLPathHome checks for the path '/' in the URL and returns true if path is '/'
@@ -55,7 +62,7 @@ func isURLPathHome(r *http.Request) bool {
 // About handles the about page with URL /about
 func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 
-	td := dynContentAbout()
+	td := rp.dynContentAbout(r)
 	err := render.RenderTemplate(w, aboutTpl, td) //Using .html notation to use Emmet abbreviations in VS Code
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -64,9 +71,11 @@ func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func dynContentAbout() *models.TemplateData {
+// dynContentAbout returns the templated data filled with dynamic content for the about page
+func (rp *Repository) dynContentAbout(r *http.Request) *models.TemplateData {
 	sMap := make(map[string]string)
 	sMap["About me"] = "Software Engineering Manager from Germany"
+	sMap["remote_Ip"] = rp.App.Session.GetString(r.Context(), "remote_Ip")
 	td := models.TemplateData{StringMap: sMap}
 	return &td
 }
