@@ -1,8 +1,8 @@
 # ReadMe
 
-This repo is the project *bed-and-breakfast* as described in the course  [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/). 
+This repo is the project *bed-and-breakfast* as described in the course  [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/).
 
-This is the `bed and breakfast` project built with go as backend. 
+This is the `bed and breakfast` project built with go as backend.
 
 ## How to test the repo?
 
@@ -14,7 +14,7 @@ Run the tests with
 
 ### Test Result
 
-In case of confusion, check the commits. 
+In case of confusion, check the commits.
 
 ## Expected output
 
@@ -92,7 +92,7 @@ Your remote address is:[::1]:56140
 
 ## Report bugs or suggestions
 
-Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome. 
+Please use the *Issues* feature in github to raise one. There is no guarantee or promise to fix it, because, well, this repo is a project after all. However, all suggestions are welcome.
 
 ## Disclaimer
 
