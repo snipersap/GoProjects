@@ -1,4 +1,6 @@
-# ReadMe
+# Bed and Breakfast training
+
+Update 30.09.2023: Completed the training and the basics of bed and breakfast project. Now will clean up and move it to [Bookings & Reservations](https://github.com/snipersap/bookings) project, which will be created as a separate repo.  
 
 This repo is the project *bed-and-breakfast* as described in the course  [Building Modern Web Applications with Go (Golang)](https://udemy.com/course/building-modern-web-applications-with-go/).
 
