@@ -6,6 +6,7 @@ type person struct {
 	age int
 }
 
+// NewPerson initializes the age of the person
 func (p *person) NewPerson(initialAge int) *person {
 	//Add some more code to run some checks on initialAge
 	p.age = initialAge
@@ -16,6 +17,7 @@ func (p *person) NewPerson(initialAge int) *person {
 	return p
 }
 
+// amIOld checks if the person is young, teenager or old
 func (p person) amIOld() {
 	//Do some computation in here and print out the correct statement to the console
 	if p.age < 13 {
@@ -27,6 +29,7 @@ func (p person) amIOld() {
 	}
 }
 
+// yearPasses increments the age of the person by 1
 func (p *person) yearPasses() *person {
 	//Increment the age of the person in here
 	p.age++
