@@ -3,16 +3,16 @@ package main
 import "fmt"
 
 type messageToSend struct {
-	phoneNumber type int
-	message type string
+	phoneNumber int
+	message     string
 }
 
-func main {
+func main() {
 
-	var ms type messageToSend
+	var ms messageToSend
 	ms.phoneNumber = 12346
 	ms.message = "This is my Phone Number:"
 
-	fmt.Println(ms.phoneNumber, ms.message)
+	fmt.Println(ms.message, ms.phoneNumber)
 
 }
