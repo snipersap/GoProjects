@@ -42,3 +42,63 @@ fmt.Println(lanesTruck.model)
 At Textio, a "user" struct represents an account holder, and a "sender" is just a "user" with some additional "sender" specific data. A "sender" is a user that has a rateLimit field that tells us how many messages they are allowed to send.
 
 Fix the bug by embedding the proper struct in the other.
+
+### Test results
+```bash
+$> go test
+---------------------------------
+Inputs:     (10000, Deborah, 18055558790)
+Expecting:
+====================================
+Sender name: Deborah
+Sender number: 18055558790
+Sender rateLimit: 10000
+====================================
+
+Actual:
+====================================
+Sender name: Deborah
+Sender number: 18055558790
+Sender rateLimit: 10000
+====================================
+
+Pass
+---------------------------------
+Inputs:     (5000, Jason, 18055558791)
+Expecting:
+====================================
+Sender name: Jason
+Sender number: 18055558791
+Sender rateLimit: 5000
+====================================
+
+Actual:
+====================================
+Sender name: Jason
+Sender number: 18055558791
+Sender rateLimit: 5000
+====================================
+
+Pass
+---------------------------------
+Inputs:     (1000, Jill, 18055558792)
+Expecting:
+====================================
+Sender name: Jill
+Sender number: 18055558792
+Sender rateLimit: 1000
+====================================
+
+Actual:
+====================================
+Sender name: Jill
+Sender number: 18055558792
+Sender rateLimit: 1000
+====================================
+
+Pass
+---------------------------------
+3 passed, 0 failed
+PASS
+ok      embedded-struct 0.131s
+```
