@@ -51,6 +51,8 @@ type Copier interface {
 ```
 Much better. We can see what the expectations are now. The first parameter is the `sourceFile`, the second parameter is the `destinationFile`, and `bytesCopied`, an integer, is returned.
 
+## Best practices of Interfaces
+Collection of [best practices of interfaces](https://blog.boot.dev/golang/golang-interfaces/).
 
 ## Assignment
 
