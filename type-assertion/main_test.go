@@ -62,9 +62,30 @@ func Test(t *testing.T) {
 
 	passCount := 0
 	failCount := 0
-
+	//test type assertion
 	for _, test := range tests {
 		to, cost := getExpenseReport(test.expense)
+		if to != test.expectedTo || cost != test.expectedCost {
+			failCount++
+			t.Errorf(`---------------------------------
+Inputs:     %+v
+Expecting:  (%v, %v)
+Actual:     (%v, %v)
+Fail`, test.expense, test.expectedTo, test.expectedCost, to, cost)
+		} else {
+			passCount++
+			fmt.Printf(`---------------------------------
+Inputs:     %+v
+Expecting:  (%v, %v)
+Actual:     (%v, %v)
+Pass
+`, test.expense, test.expectedTo, test.expectedCost, to, cost)
+		}
+	}
+
+	//test type switches
+	for _, test := range tests {
+		to, cost := getExpenseReportWithSwitch(test.expense)
 		if to != test.expectedTo || cost != test.expectedCost {
 			failCount++
 			t.Errorf(`---------------------------------

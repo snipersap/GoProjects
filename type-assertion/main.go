@@ -17,6 +17,16 @@ func getExpenseReport(e expense) (string, float64) {
 
 }
 
+func getExpenseReportWithSwitch(e expense) (string, float64) {
+	switch t := e.(type) {
+	case email:
+		return t.toAddress, t.cost()
+	case sms:
+		return t.toPhoneNumber, t.cost()
+	}
+	return "", 0.0
+}
+
 type expense interface {
 	cost() float64
 }
