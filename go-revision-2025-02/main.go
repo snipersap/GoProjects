@@ -147,6 +147,76 @@ func main() {
 	fmt.Println("Functions as arguments: Subtraction of 3 numbers")
 	fmt.Println("Subtraction of 2,3 and 4 in that sequence:", arithmetic(2, 3, 4, sub))
 
+	//16. Anonymous Functions
+	fmt.Println("Addition via anonymous function:")
+	sumOfAdd := func(a, b int) int {
+		return a + b
+	}(2, 4)
+	fmt.Println("The sum of 2 numbers through an anonymous function is:", sumOfAdd)
+
+	//17. Defer function
+	fmt.Println("Defer functions:")
+	completeAction(7)
+
+	//18. Closures
+	fmt.Println("Closures access variables outside its own function body.")
+	writeStory := baseline()
+	writeStory("Little Red riding Hood")
+	writeStory("Went through the jungle to visit her Granny")
+	writeStory("The bad wolf waited for his prey disguised as her Granny")
+	writeStory("Little Red Riding Hood was too smart for the wolf")
+	fmt.Println(writeStory("She got away safely"))
+
+	//19. Structs - Nested, Named and anonymous
+	//Definition
+	type seat struct {
+		upholstery string
+		color      string
+	}
+
+	type light struct {
+		kind         string
+		power        string
+		motionSensor bool
+	}
+
+	type car struct {
+		brand     string
+		color     string
+		model     string
+		doors     int
+		frontSeat seat //nested
+		rearSeat  seat //nested
+		wheel     struct {
+			pressure float64
+			kind     string
+		} //anonymous nested
+		light //embedded
+	}
+	//Initialization
+	frontSeat := seat{
+		upholstery: "leather",
+		color:      "#abcde",
+	}
+
+	myCar := car{
+		brand:     "BMW",
+		color:     "#fff888",
+		model:     "i20FR",
+		doors:     5,
+		frontSeat: frontSeat, //with variable
+		wheel: struct {
+			pressure float64
+			kind     string
+		}{pressure: 3.4, kind: "M+S"}, //direct
+		light: light{kind: "LED", power: "3000 Lumens", motionSensor: true}, //direct
+	}
+
+	myCar.rearSeat.upholstery = "polymer"
+	myCar.rearSeat.color = "#zzzhhr"
+	//Usage
+	fmt.Println("My car configuration via nested, named and anonymous struct is:", myCar)
+
 }
 
 // Multiple args, multiple return values, return nil error,
@@ -196,4 +266,27 @@ func mul(x, y int) int {
 
 func sub(f, g int) int {
 	return f - g
+}
+
+// Defer functions
+func completeAction(a int) {
+	defer func() {
+		fmt.Println("Target achieved!")
+	}()
+
+	for i := range a { //mordenized using range instead of incrementing and checking i
+		fmt.Printf("Task %d done. ", i)
+		if i == 5 {
+			return
+		}
+	}
+}
+
+// Closure
+func baseline() func(string) string {
+	doc := ""
+	return func(phrase string) string {
+		doc += phrase + ". "
+		return doc
+	}
 }
