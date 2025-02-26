@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/hex"
+	"errors"
 	"fmt"
+	"math"
 	"reflect"
 	"strconv"
 	"unicode/utf8"
@@ -167,7 +170,7 @@ func main() {
 	writeStory("Little Red Riding Hood was too smart for the wolf")
 	fmt.Println(writeStory("She got away safely"))
 
-	//19. Structs - Nested, Named and anonymous
+	//19. Structs - Nested, Named, anonymous and embedded
 	//Definition
 	type seat struct {
 		upholstery string
@@ -181,15 +184,15 @@ func main() {
 	}
 
 	type car struct {
+		doors     int
 		brand     string
 		color     string
 		model     string
-		doors     int
 		frontSeat seat //nested
 		rearSeat  seat //nested
 		wheel     struct {
-			pressure float64
 			kind     string
+			pressure float64
 		} //anonymous nested
 		light //embedded
 	}
@@ -206,18 +209,101 @@ func main() {
 		doors:     5,
 		frontSeat: frontSeat, //with variable
 		wheel: struct {
-			pressure float64
 			kind     string
-		}{pressure: 3.4, kind: "M+S"}, //direct
-		light: light{kind: "LED", power: "3000 Lumens", motionSensor: true}, //direct
+			pressure float64
+		}{pressure: 3.4}, //direct
+		light: light{kind: "LED", power: "3000 Lumens"}, //direct
 	}
-
+	//access nested struct
 	myCar.rearSeat.upholstery = "polymer"
 	myCar.rearSeat.color = "#zzzhhr"
+	//access field with anonymous nested struct
+	myCar.wheel.kind = "M+S"
+	//access embedded struct
+	myCar.motionSensor = true
 	//Usage
 	fmt.Println("My car configuration via nested, named and anonymous struct is:", myCar)
 
-}
+	//20. Hexadecimal values
+	h1 := 0x1a
+	fmt.Printf("Hex value is: %x, Decimal value is %d\n", h1, h1)
+	d2 := 42
+	h2 := fmt.Sprintf("%#x", d2)
+	fmt.Printf("Hex value for 42 is %v\n", h2)
+	//Encode []bytes to hex
+	bt := []byte("Golang")
+	h3 := hex.EncodeToString(bt)
+	fmt.Println("Encoded GoLang string in hex is:", h3)
+	btFromHex, _ := hex.DecodeString(h3)
+	fmt.Println("Decoded back to String is:", string(btFromHex))
+
+	//21. Receivers of Struct
+	r2 := rect{length: 10, breadth: 20}
+	fmt.Println("Area of the rectangle via receiver of struct is:", r2.area())
+
+	//22. Optimize size of Struct
+	typ := reflect.TypeOf(myCar)
+	fmt.Printf("The size of the type of myCar (a struct) is:%d bytes\n", typ.Size())
+
+	typ = reflect.TypeOf(r2)
+	fmt.Printf("The size of the type of r2 (a struct) is:%d bytes\n", typ.Size())
+
+	//23. Empty structs
+	//Named
+	type empty struct{}
+	//Anonymous
+	empty1 := struct{}{}
+	fmt.Println("Empty Struct", empty1)
+
+	//24. Interfaces - Single and Multiple
+	myRect := rect1{length: 10, breadth: 20}
+	myCircle := circle{radius: 30}
+	fmt.Println("Rectangle via Single Interface")
+	printAreaAndPerimeter(myRect)
+	fmt.Println("Circle via Multiple Interfaces")
+	printAreaAndPerimeter(myCircle)
+	printDiameter(myCircle)
+
+	//25. Type assertion using Interfaces
+	fmt.Println("Type assertion: Shape is a rectangle or circle?")
+	identifyShape(myRect)
+	identifyShape(myCircle)
+
+	//26. Type switch with Interfaces
+	fmt.Println("Type switch with Interfaces:")
+	determineType(myRect)
+	determineType(myCircle)
+
+	//27. Error interface
+	fmt.Println("Simulate Error interface with custom error:")
+	err := generateError()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//28. Using the errors package
+	fmt.Println("Demo creating a new error using the errors package:")
+	err = genErrFromPkg()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//29. Demo Pass through Error
+	fmt.Printf("Demo of pass through error:")
+	err = demoPassThroughError()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//30. Panic and recover
+	fmt.Println("Panic and recover!")
+	panic := false
+	panicAndRecover(panic)
+
+	//31. Loops in Go
+	loopsInGo()
+
+} //end of main()
 
 // Multiple args, multiple return values, return nil error,
 // argument types declared only once for similar types
@@ -288,5 +374,176 @@ func baseline() func(string) string {
 	return func(phrase string) string {
 		doc += phrase + ". "
 		return doc
+	}
+}
+
+// Receiver of struct
+type rect struct {
+	length  int64
+	breadth int64
+}
+
+func (r rect) area() int64 {
+	return r.length * r.breadth
+}
+
+// Interfaces
+type shape interface {
+	area() float64 //Unnamed interface parameters
+	perimeter() float64
+}
+
+// Interfaces: Define function with shape as args
+func printAreaAndPerimeter(s shape) {
+	fmt.Println("Area of the shape is:", s.area())
+	fmt.Println("Perimeter of the shape is:", s.perimeter())
+}
+
+type rect1 struct {
+	length  int
+	breadth int
+}
+
+// Interfaces: rect1 implements interface shape
+func (r rect1) area() float64 {
+	return float64(r.length * r.breadth) //l*b
+}
+func (r rect1) perimeter() float64 {
+	return float64(2 * (r.length + r.breadth)) //2(ab)
+}
+
+type circle struct {
+	radius float64
+}
+
+// Interfaces: circle implements the interface shape
+const pi = 3.14159
+
+func (c circle) area() float64 {
+	return pi * math.Pow(c.radius, 2) //Pir^2
+}
+func (c circle) perimeter() float64 {
+	return 2 * pi * c.radius
+}
+
+// Multiple interfaces
+type shape3d interface {
+	diameter() (diameter float64) //Named interface parameters
+}
+
+// Multiple interfaces: Define function with shape3d as args
+func printDiameter(s3 shape3d) {
+	fmt.Println("The diameter of the 3d shape is:", s3.diameter())
+}
+
+// Multiple interfaces:circle implements diameter interface
+func (c circle) diameter() float64 {
+	return 2 * c.radius
+}
+
+// Type Assertion with Interfaces
+func identifyShape(s shape) {
+	r, ok := s.(rect1) //assert if s is a rectangle
+	if ok {
+		fmt.Println("The shape is a rectangle with area:", r.area())
+		return
+	}
+	c, ok := s.(circle) //assert if s is a circle
+	if ok {
+		fmt.Println("The shape is a circle with perimeter:", c.perimeter())
+		return
+	}
+}
+
+// Type switch with interfaces
+func determineType(s shape) {
+	switch typ := s.(type) {
+	case rect1:
+		fmt.Printf("Type is %T\n", typ)
+	case circle:
+		fmt.Printf("Type is %T\n", typ)
+	default:
+		fmt.Println("Type is unknown:", typ)
+	}
+}
+
+/*
+Alternative type switch
+
+	func determineType(s shape) {
+		switch typ := reflect.TypeOf(s).String(); typ {
+		case "main.rect1":
+			fmt.Printf("Type is %s\n", typ)
+		case "main.circle":
+			fmt.Printf("Type is %s\n", typ)
+		default:
+			fmt.Println("Type is unknown", typ)
+		}
+	}
+*/
+
+// Implement the Error interface
+func (r rect1) Error() string {
+	return fmt.Sprintf("Error for rectangle with length:%d and breadth:%d", r.length, r.breadth)
+}
+
+func generateError() error {
+	return rect1{length: 1000, breadth: 2000}
+}
+
+// Use the Error standard Package
+func genErrFromPkg() error {
+	return errors.New("generated a new error using the Errors package")
+}
+
+// Demo a pass through error
+func demoPassThroughError() error {
+	err := genErrFromPkg()
+	if err != nil {
+		pkgErr := fmt.Errorf("pass through error caught generated error using errors pkg:%w", err)
+		return pkgErr
+	}
+	return nil
+}
+
+// Demo Panic and recover based on args
+func panicAndRecover(panic bool) {
+	defer func() {
+		r := recover()
+		if r != nil {
+			fmt.Println("I have now recovered from the panic:", r)
+		}
+	}()
+	if panic {
+		createPanic()
+	}
+}
+func createPanic() {
+	panic("i am solely here to create panic!")
+}
+
+// Loops in Go.
+func loopsInGo() {
+	count := 3
+	fmt.Printf("For loop with init, condition, increment:")
+	for i := 0; i < count; i++ { //i scoped to for block
+		fmt.Printf("%d;", i)
+	}
+	fmt.Printf("\nFor loop with init, no condition, increment:")
+	for i := 0; ; i++ {
+		fmt.Printf("%d;", i)
+		if i > count { //prevent endless loop
+			break
+		}
+	}
+	fmt.Printf("\nFor loop with condition only like while loop:")
+	j := 0 //unnecessary increase of scope using this format
+	for j < count {
+		fmt.Printf("%d;", j)
+		j++
+	}
+	fmt.Printf("\nFor loop with range over counter:")
+	for i := range count { //i scoped to for block
+		fmt.Printf("%d;", i)
 	}
 }
