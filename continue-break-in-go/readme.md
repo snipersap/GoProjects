@@ -76,6 +76,10 @@ Primes up to 10:
 
 We only want you to print the numbers themselves, not the headings and delimiter.
 
+## Additional exercise
+Test Goldbach's Conjecture by printing the smallest number of primes that sum up to the given even number. 
+Goldbach's conjecture: Every even number is the sum of 2 prime numbers. 
+
 ### Test results
 ```bash
 Primes up to 10:
@@ -105,4 +109,20 @@ Primes up to 29:
 19
 23
 29
+Smallest Primes adding up to 74:
+(3,71)
+Duration: 0
+===============================================================
+Smallest Primes adding up to 108:
+(5,103)
+Duration: 521900
+===============================================================
+Smallest Primes adding up to 584:
+(7,577)
+Duration: 0
+===============================================================
+Smallest Primes adding up to 998:
+(7,991)
+Duration: 525500
+===============================================================
 ```

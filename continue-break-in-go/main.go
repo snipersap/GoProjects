@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func printPrimes(max int) {
@@ -23,6 +24,28 @@ func printPrimes(max int) {
 	}
 }
 
+func printPrimeCombo(even int) {
+	for i := 2; i < even/2; i++ {
+		if isPrime(i) && isPrime(even-i) {
+			fmt.Printf("(%v,%v)\n", i, even-i)
+			break
+		}
+	}
+}
+
+func isPrime(num int) bool {
+	if num <= 1 {
+		return false
+	}
+	for i := 2; i*i <= num; i++ {
+		if num%i == 0 {
+			return false
+		}
+	}
+	return true
+
+}
+
 // don't edit below this line
 
 func test(max int) {
@@ -31,8 +54,20 @@ func test(max int) {
 	fmt.Println("===============================================================")
 }
 
+func testGoldbachsConjecture(even int) {
+	fmt.Printf("Smallest Primes adding up to %v:\n", even)
+	start := time.Now()
+	printPrimeCombo(even)
+	fmt.Println("Duration:", time.Since(start).Nanoseconds())
+	fmt.Println("===============================================================")
+}
+
 func main() {
 	test(10)
 	test(20)
 	test(29)
+	testGoldbachsConjecture(74)
+	testGoldbachsConjecture(108)
+	testGoldbachsConjecture(584)
+	testGoldbachsConjecture(998)
 }
